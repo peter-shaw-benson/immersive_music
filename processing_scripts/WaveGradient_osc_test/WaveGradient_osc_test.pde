@@ -140,7 +140,7 @@ void oscEvent(OscMessage message) {
       
       float yaw = message.get(2).floatValue();
       
-      float totalAcceleration = roll + pitch + yaw();
+      float totalAcceleration = roll + pitch + yaw;
       // you can basically do anything here – use these to set a new thing? 
       // probably best to sum this over a period of time
     }

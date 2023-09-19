@@ -52,12 +52,11 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-15",
-					"linecount" : 2,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 337.0, 166.0, 111.0, 35.0 ],
-					"text" : "udpsend 127.0.0.1 12000"
+					"patching_rect" : [ 337.0, 166.0, 145.0, 22.0 ],
+					"text" : "udpsend 127.0.0.1 57120"
 				}
 
 			}
@@ -140,7 +139,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 350.0, 272.0, 100.0, 22.0 ],
-					"text" : "/example/bang 1"
+					"text" : "/bang 1"
 				}
 
 			}
@@ -163,7 +162,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 92.0, 283.0, 145.0, 22.0 ],
-					"text" : "udpsend 127.0.0.1 12000"
+					"text" : "udpsend 127.0.0.1 57120"
 				}
 
 			}

@@ -18,7 +18,6 @@ let SHOWIMG = false;
 // let PRESET = 0;
 const note = {currentNote: 0};
 
-//Code starts here (play around with it if you want lol): 
 var turtles = []; let size = 24; let numTurtles = 5; let turtleSpeed = 4; 
 let imgs = [], currentImgIndex = 0; 
 function preload(){

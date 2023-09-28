@@ -34,6 +34,8 @@ int currentImgIndex = 0;
 AudioIn mic;
 Amplitude amp;
 
+PImage currentImage;
+
 void preload() {
   for (int i = first_image_number; i <= first_image_number+numimgs-1; i++){
     imgs[i-1] = loadImage("./images/moon_${i}.jpg");
@@ -42,7 +44,8 @@ void preload() {
 
 void setup() {
   // full screen start
-  fullScreen();
+  //fullScreen();
+  size(600, 600);
   background(0);
   
   for (int i = 0; i < numTurtles; i++){
@@ -66,42 +69,43 @@ void setup() {
     print("\nLoaded:\n");
     print(filename);
   }
+  
+    
+  //  Current Image. Starts as the first image.
+  currentImage = imgs[0];
 }
 
 int period = 200, slowestPeriod = 250, fastestPeriod = 5;
-float INTENSITY_SENSITIVITY = 0.1;
+float INTENSITY_SENSITIVITY = 1.5;
 float showThreshhold = 0.5;
 int showIndex = 0;
 
 void draw() {
   background(0,10);
   drawCracks(); 
-  /* the following is used for real-time image speed reactions:
-  // if (INTENSITY >= 0.8) {
-  //   displayIMG(2);
-  // } else if (INTENSITY > 0.6) {
-  //   displayIMG(5);
-  // } else if (INTENSITY > 0.2) {
-  //   displayIMG(10);
-  //   if (firstUP){
-  //     SHOWIMG = true;
-  //   }
-  // }
-  */
-
-  noiseShape(); // that big spiky thing
-
-  INTENSITY = amp.analyze();
   
-  accumINTENSITY += INTENSITY/50;
-  showIndex += INTENSITY/50;
-    if (accumINTENSITY > INTENSITY_SENSITIVITY && SHOWIMG) {
-      if (period > fastestPeriod+11){
-        // SHOWIMG = true;
-        period -= 10;
-      }
-      accumINTENSITY = 0;
-    }
+  // The problem is that after it loops again, the image is reset. 
+  // need to "hold" an image. 
+
+   // scaled to the sensitivity.
+   INTENSITY = amp.analyze() * INTENSITY_SENSITIVITY;
+   
+   // displays the current image
+   image(currentImage,0,0,width,height);
+   
+   
+   //the following is used for real-time image speed reactions. These change the index of the Current Image.
+   if (INTENSITY >= 0.8) {
+     displayIMG(2);
+   } else if (INTENSITY > 0.6) {
+     displayIMG(5);
+   } else if (INTENSITY > 0.2) {
+     //print("high intensity");
+     displayIMG(10);
+   } else {
+     displayIMG(30);
+   }
+   
 }
 
 
@@ -142,18 +146,67 @@ void noiseShape(){
   // }
 }
 
-void displayIMG(float period) {
+void displayIMG(int period) {
   if (SHOWIMG){
     // stroke(255,90);
     // strokeWeight(5);
-    if (frameCount%(round(period)) == 0){
+    if (frameCount % period == 0){
+      if (currentImgIndex >= numimgs - 1) {
+        currentImgIndex = 0;
+      }
+      
+      tint(255, map(period, 200, 10, 0, 255));
+      
+      currentImgIndex++;
+      
+      currentImage = imgs[currentImgIndex];
+    }
+  }
+}
+
+void displayIMG2() {
+  int interval = 30;
+  
+  if (frameCount % interval == 0){
+    print(frameCount);
+    
       if (currentImgIndex > numimgs - 1) {
         currentImgIndex = 0;
       }
-      tint(255, map(period, 200, 10, 0, 255));
+      
+      //tint(255, map(period, 200, 10, 0, 255));
       image(imgs[currentImgIndex],0,0,width,height);
       
       currentImgIndex++;
-    }
+    } 
+}
+
+void iterateImages() {
+  int interval = 30;
+  
+  if (frameCount % interval == 0){
+    //print(frameCount);
+    
+      if (currentImgIndex >= numimgs - 1) {
+        currentImgIndex = 0;
+      }
+      
+      currentImgIndex++;
+      
+      currentImage = imgs[currentImgIndex];
+  } 
+}
+
+void keyPressed(){
+  if (keyCode == DOWN) {
+    background(0);
+    SHOWIMG = false;
+  }
+  if (keyCode == UP) {
+    SHOWIMG = true;
+    displayIMG(20);
+    firstUP = true;
+    
+    print("showing");
   }
 }

@@ -36,12 +36,6 @@ Amplitude amp;
 
 PImage currentImage;
 
-void preload() {
-  for (int i = first_image_number; i <= first_image_number+numimgs-1; i++){
-    imgs[i-1] = loadImage("./images/moon_${i}.jpg");
-  }
-}
-
 void setup() {
   // full screen start
   //fullScreen();
@@ -127,25 +121,6 @@ void turtleShape(int turtleLength){
   // }
 }
 
-void noiseShape(){
-  // if (PRESET == 2){
-    stroke(255, 15);
-    strokeWeight(1);
-    fill(255,100);
-    translate(width/2, height/2);
-    beginShape();
-    for (var i = 0; i < 200; i++) {
-      var ang = map(i, 0, 200, 0, TWO_PI);
-      var rad = noise(i,frameCount)*400;
-      var x = rad * cos(ang);
-      var y = rad * sin(ang);
-      curveVertex(x, y);
-    }
-    endShape(CLOSE);
-    translate(0, 0);
-  // }
-}
-
 void displayIMG(int period) {
   if (SHOWIMG){
     // stroke(255,90);
@@ -162,39 +137,6 @@ void displayIMG(int period) {
       currentImage = imgs[currentImgIndex];
     }
   }
-}
-
-void displayIMG2() {
-  int interval = 30;
-  
-  if (frameCount % interval == 0){
-    print(frameCount);
-    
-      if (currentImgIndex > numimgs - 1) {
-        currentImgIndex = 0;
-      }
-      
-      //tint(255, map(period, 200, 10, 0, 255));
-      image(imgs[currentImgIndex],0,0,width,height);
-      
-      currentImgIndex++;
-    } 
-}
-
-void iterateImages() {
-  int interval = 30;
-  
-  if (frameCount % interval == 0){
-    //print(frameCount);
-    
-      if (currentImgIndex >= numimgs - 1) {
-        currentImgIndex = 0;
-      }
-      
-      currentImgIndex++;
-      
-      currentImage = imgs[currentImgIndex];
-  } 
 }
 
 void keyPressed(){

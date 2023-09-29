@@ -33,8 +33,8 @@ class Turtle {
   }
   
   void display() {
-    stroke(255,90);
-    strokeWeight(map(INTENSITY,0,1, 20, 100));
+    stroke(255,200);
+    strokeWeight(map(INTENSITY,0,1, 10, 30));
     line(this.xloc,this.yloc,this.pxloc,this.pyloc);
   }
   

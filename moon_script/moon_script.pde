@@ -76,7 +76,6 @@ int showIndex = 0;
 
 void draw() {
   background(0,10);
-  drawCracks(); 
   
   // The problem is that after it loops again, the image is reset. 
   // need to "hold" an image. 
@@ -85,7 +84,9 @@ void draw() {
    INTENSITY = amp.analyze() * INTENSITY_SENSITIVITY;
    
    // displays the current image
-   image(currentImage,0,0,width,height);
+   if (SHOWIMG) {
+     image(currentImage,0,0,width,height);
+   }
    
    
    //the following is used for real-time image speed reactions. These change the index of the Current Image.
@@ -100,6 +101,9 @@ void draw() {
      displayIMG(30);
    }
    
+   
+   // draw turtles last, in front
+   drawCracks(); 
 }
 
 

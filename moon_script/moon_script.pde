@@ -23,10 +23,17 @@ boolean SHOWIMG = false;
 
 // Declare turtle variables 
 int size = 24; 
-int numTurtles = 1; 
+
+// note: this also shouldn't be very high.
+int numTurtles = 15; 
 Turtle[] turtles = new Turtle[numTurtles];
-int turtleSpeed = 4;
+int turtleSpeed = 5;
+
+// note: this shouldn't be very high. 
 int turtleTrailLength = 50;
+// controls lines vs curves – lines might save CPU
+// nvm, curves are better lol
+boolean turtleLines = false;
 
 
 PImage[] imgs = new PImage[numimgs];
@@ -48,7 +55,8 @@ void setup() {
     turtles[i] = new Turtle(random(width-10),
                             random(height-10),
                             random(TWO_PI),
-                            turtleTrailLength);
+                            turtleTrailLength,
+                            turtleLines);
   }
   
   // create a new "mic"
@@ -114,7 +122,7 @@ void draw() {
 
 void drawCracks(){
   // if (PRESET == 0){
-    for (int i = 0; i < numTurtles; i++){
+    for (int i = 0; i < turtles.length; i++){
       turtles[i].turn(random(-PI/12,PI/12));
       turtles[i].move(random(map(INTENSITY,0,1,0,100))*turtleSpeed+2);
     }
@@ -124,7 +132,7 @@ void drawCracks(){
 // used for drawing many cracks in one frame
 void turtleShape(int turtleLength){
   // if (PRESET ==1){
-    for (int i = 0; i < turtleLength; i++){
+    for (int i = 0; i < turtles.length; i++){
       drawCracks();
     }
   // }
@@ -159,5 +167,22 @@ void keyPressed(){
     firstUP = true;
     
     print("showing");
+  }
+  
+  // add or subtract turtles
+  if (keyCode == RIGHT) {
+    // add turtles
+    Turtle newTurt = new Turtle(random(width-10),
+                                random(height-10),
+                                random(TWO_PI),
+                                turtleTrailLength,
+                                turtleLines);
+    
+    turtles = (Turtle[]) append(turtles, newTurt);
+  } 
+  
+  if (keyCode == LEFT) {
+    // removes one turtle from the end
+    turtles = (Turtle[]) shorten(turtles);
   }
 }

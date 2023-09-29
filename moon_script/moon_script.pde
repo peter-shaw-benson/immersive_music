@@ -12,7 +12,7 @@ import processing.sound.*;
 
 // declare image variables
 boolean firstUP = false;
-int numimgs = 50; 
+int numimgs = 2; 
 int first_image_number = 1;
 
 // declare intensity variables
@@ -23,9 +23,10 @@ boolean SHOWIMG = false;
 
 // Declare turtle variables 
 int size = 24; 
-int numTurtles = 5; 
+int numTurtles = 1; 
 Turtle[] turtles = new Turtle[numTurtles];
 int turtleSpeed = 4;
+int turtleTrailLength = 50;
 
 
 PImage[] imgs = new PImage[numimgs];
@@ -43,7 +44,11 @@ void setup() {
   background(0);
   
   for (int i = 0; i < numTurtles; i++){
-    turtles[i] = new Turtle(random(width-10),random(height-10),random(TWO_PI));
+    // create all the turtles
+    turtles[i] = new Turtle(random(width-10),
+                            random(height-10),
+                            random(TWO_PI),
+                            turtleTrailLength);
   }
   
   // create a new "mic"
